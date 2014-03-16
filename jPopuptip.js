@@ -90,12 +90,14 @@
     function makeBox(){
 
     }
+    //获取元素尺寸
     function computeEleSize(el){
         return {
             'width' : el.offsetWidth,
             'height' : el.offsetHeight
         };
     }
+    //判断提示框应出现的位置
     function testBoxPosition(el,tp){
         var boxSize = computeEleSize(el);
             boxNeedSize = {
@@ -127,6 +129,7 @@
         }
         return 0;
     }
+    //获取目标元素在浏览器视口中的相对位置
     function getElePosInView(el){
         var scroll = getDocScroll(el),
             eleTop = getEleTop(el)- scroll.scrollTop,
@@ -140,32 +143,21 @@
             'bottom': viewSize.viewHeight - eleSize.height - eleTop
         };
     }
+    //获取浏览器视口大小
     function getViewport()
         {
             var w = (window.innerWidth) ? window.innerWidth : (document.documentElement && document.documentElement.clientWidth) ? document.documentElement.clientWidth : document.body.offsetWidth;
             var h = (window.innerHeight) ? window.innerHeight : (document.documentElement && document.documentElement.clientHeight) ? document.documentElement.clientHeight : document.body.offsetHeight;
             return {'viewWidth':w,'viewHeight':h};
         };
-    // function getViewport(){
-    //     if(document.compatMode == 'BackCompat'){
-    //         return {
-    //             'viewWidth' : Math.max(document.body.clientWidth,document.body.scrollWidth),
-    //             'viewHeight' : Math.max(document.body.clientHeight,document.body.scrollHeight)
-    //         };
-    //     }
-    //     else{
-    //         return {
-    //             'viewWidth' : Math.max(document.documentElement.clientWidth,document.documentElement.scrollWidth),
-    //             'viewHeight' : Math.max(document.documentElement.clientHeight,document.documentElement.scrollHeight)
-    //         };
-    //     }
-    // }
+    //获取文档滚动高度与宽度
     function getDocScroll(){
         return {
             'scrollTop' : document.body.scrollTop+document.documentElement.scrollTop,
             'scrollLeft' : document.body.scrollLeft+document.documentElement.scrollLeft
         };
     }
+    //获取元素与文档左边距离
     function getEleLeft(el){
         var actulaLeft = el.offsetLeft;
         var parent = el.offsetParent;
@@ -175,6 +167,7 @@
         }
         return actulaLeft;
     }
+    //获取元素与文档上边距离
     function getEleTop(el){
         var actulaTop = el.offsetTop
         var parent = el.offsetParent;
