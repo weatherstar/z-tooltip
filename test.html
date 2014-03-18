@@ -11,7 +11,7 @@
         body{
             height: 3000px;
         }
-        .tipBox{
+        .m-tipbox{
             width: 300px;
             height: 100px;
             padding: 10px;
@@ -19,22 +19,30 @@
             border: 1px solid #999;
             position: relative;
         }
-        .tipBox .arr{
+        .m-tipbox .u-arrow{
             display: block;
             position: absolute;
             width: 0;
             height: 0;
             border: 14px solid;
         }
-        .tipBox .arr1{
+        .m-tipboxL .u-arrow{right: 20px;}
+        .m-tipboxR .u-arrow{left: 20px;}
+        .m-tipboxT .u-arrowB{
             bottom: -28px;
-            left: 20px;
             border-color: #999 transparent transparent transparent;
         }
-        .tipBox .arr2{
+        .m-tipboxT .u-arrowT{
             bottom: -27px;
-            left: 20px;
             border-color: #fff transparent transparent transparent;
+        }
+        .m-tipboxB .u-arrowB{
+            top: -28px;
+            border-color: transparent transparent #999 transparent;
+        }
+        .m-tipboxB .u-arrowT{
+            top: -27px;
+            border-color: transparent transparent #fff transparent;
         }
         #my{
             display: block;
@@ -42,19 +50,18 @@
             height: 100px;
             line-height: 100px;
             border: 1px solid #999;
-            margin: 300px 0 0 1000px;
+            margin: 300px 0 0 1100px;
         }
     </style>
 </head>
 <body>
-    <a id="my">my</a>
-    <div class="tipBox">
-        <i class="arr arr1"></i>
-        <i class="arr arr2"></i>
-        <div class="tip-con">
-
-        </div>
-    </div>
+    <a id="my" data-showTip="show">my</a>
 <script type="text/javascript" src="jPopuptip.js"></script>
+<script type="text/javascript">
+    (function(){
+        var f = Tipbox();
+        getElementById('my').Tipbox();
+    })();
+</script>
 </body>
 </html>
