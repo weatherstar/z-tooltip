@@ -19,6 +19,9 @@
         options:{},
         extend : function(from,to){
             var i, obj = {};
+            if(!to){
+                return from;
+            }
             for(i in from){
                 obj[i] = to[i] ? to[i] : from[i];
             }
@@ -45,87 +48,224 @@
                 };
             }
         })(),
-        hasClass:function(ele,value){
-            return el.className.match(/(?:^|\s)MyClass(?!\S)/);
+        hasClass : function (element,className) {
+            var reg = new RegExp('(\\s|^)' + className + '(\\s|$)');
+            return element.className.match(reg);
+        },
+        addClass:function(ele,className){
+            var classArr = className.split(' ');
+            for(var i = 0,len = classArr.length;i < len;i++){
+                if(!common.hasClass(ele,classArr[i])){
+                    ele.className += ' '+classArr[i];
+                }
+            }
+        },
+        removeClass:function(ele,className){
+            if(ele.classList){
+                ele.classList.remove(className);
+            }
+            else{
+                var reg = new RegExp('(\\s|^)' + className + '(\\s|$)');
+                ele.className.replace(reg,'');
+            }
+        },
+        getEleByAttr:function(attribute, attributeValue){
+            var elementArray = new Array();
+        var matchedArray = new Array();
+        if (document.all)
+        {
+            elementArray = document.all;
+        }
+        else
+        {
+            elementArray = document.getElementsByTagName("*");
+        }
+        for (var i = 0; i < elementArray.length; i++)
+        {
+            if (attribute == "class")
+            {
+              var pattern = new RegExp("(^| )" +
+                   attributeValue + "( |$)");
+              if (pattern.test(elementArray[i].className))
+              {
+                matchedArray[matchedArray.length] = elementArray[i];
+            }
+        }
+        else if (attribute == "for")
+        {
+        if (elementArray[i].getAttribute("htmlFor") || elementArray[i].getAttribute("for"))
+        {
+            if (elementArray[i].htmlFor == attributeValue)
+            {
+                matchedArray[matchedArray.length] = elementArray[i];
+             }
+           }
+        }
+        else if (elementArray[i].getAttribute(attribute) == attributeValue)
+        {
+            matchedArray[matchedArray.length] = elementArray[i];
+        }
+             }
+        return matchedArray;
         }
     };
 
-    var Tipbox = function(opt){
-        if(!(this instanceof Tipbox)){
-            return new Tipbox(opt);
+    var jPopuptip = function(opt){
+        if(!(this instanceof jPopuptip)){
+            return new jPopuptip(opt);
         }
          common.options = common.extend(defaults,opt);
          this.init();
     };
+    jPopuptip.fn = jPopuptip.prototype;
+    jPopuptip.fn.init = function(){
+        var allTarget = common.getEleByAttr('data-popuptip','show');
+        for(var i = 0,len = allTarget.length;i < len;i++){
+            var triggle = allTarget[i].getAttribute('data-triggle');
+            if(triggle){
+                if(triggle =='click'){
+                    common.bind(allTarget[i],'click',clickShow,'clickshow');
+                }
+                else if(triggle =='hover'){
+                    bindHover(allTarget[i]);
+                }
+            }
+            else{
+                bindHover(allTarget[i]);
+            }
+            
+        }
+    }
+    function bindHover(ele){
+        common.bind(ele,'mouseover',hoverShow,'hoverShow');
+        common.bind(ele,'mouseout',hoverHide,'hoverHide');
+    }
+    function getBoxCurrentPosition(e,box){
+        var eleInfo = {
+                'tL' : getEleLeft(e),                            //目标元素与文档左边距离
+                'tT' : getEleTop(e),                             //目标元素与文档上边距离
+                'eleSize' : computeEleSize(e)                    //目标元素尺寸
+            },
+            targetPosition = getElePosInView(self,eleInfo);   //目标元素在视口中的相对位置          
+            var opt = common.options;
+                boxSize =  computeEleSize(box), //提示框尺寸
+                boxNeedSize = {
+                    'needWidth' : boxSize.width - (eleInfo.eleSize.width - parseInt(opt.boxOffsetX)),
+                    'needHeight' : boxSize.height + parseInt(opt.boxOffsetY)+opt.arrowSize
+                },                                                                                                                      //提示框需要占用的位置尺寸
+                boxPosition = testBoxPosition(box,targetPosition,boxNeedSize),  //获取提示框位置
+                boxLLeft = eleInfo.tL + opt.boxOffsetX,
+                boxRLeft = eleInfo.tL - boxNeedSize.needWidth,
+                boxTTop = eleInfo.tT - opt.boxOffsetY - boxSize.height-opt.arrowSize,
+                boxBTop = eleInfo.tT + opt.boxOffsetY + eleInfo.eleSize.height+opt.arrowSize,
+                boxLeft = 0,
+                boxTop = 0;
+                box.targetEle = e;
+            switch(parseInt(boxPosition)){
+                case 0:                           //右上
+                    boxLeft = boxLLeft;
+                    boxTop = boxTTop;
+                    box.className = 'm-tipboxT m-tipboxR';
+                    break;
+                case 1:                           //左上
+                    boxLeft = boxRLeft;
+                    boxTop = boxTTop;
+                    box.className = 'm-tipboxT m-tipboxL';
+                    break;
+                case 2:                           //右下
+                    boxLeft = boxLLeft;
+                    boxTop = boxBTop;
+                    box.className = 'm-tipboxB m-tipboxR';
+                    break;
+                case 3:                           //左下
+                    boxLeft = boxRLeft;
+                    boxTop = boxBTop;
+                    box.className = 'm-tipboxB m-tipboxL';
+                    break;
 
-    Tipbox.fn = Tipbox.prototype;
-    Tipbox.fn.init = function(){
-        common.bind(this,'click',showTips,'c-showT');
+            }
+            var boxCurrentPos = {
+                'boxTop':boxTop,
+                'boxLeft':boxLeft
+            };
+            return boxCurrentPos;
+    }
+    function setBox(e){
+        var jPopuptip = document.getElementById('jPopuptip'),
+            content = e.getAttribute('data-content'),
+            boxCurrentPos;
+            if(!content){
+                content='';
+            }     
+        if(!jPopuptip){
+            var box = makeTipBox();
+            document.body.appendChild(box);
+            setContent(box,content);
+            boxCurrentPos = getBoxCurrentPosition(e,box);
+            setBoxPosition(box,boxCurrentPos.boxTop,boxCurrentPos.boxLeft);
+        }
+        else{
+            if(common.hasClass(jPopuptip,'hide')){
+                if(e!==jPopuptip.targetEle){
+                    setContent(jPopuptip,content);
+                }
+                common.removeClass(jPopuptip,'hide');
+                jPopuptip.style.display = 'block';           
+                boxCurrentPos = getBoxCurrentPosition(e,jPopuptip);
+                setBoxPosition(jPopuptip,boxCurrentPos.boxTop,boxCurrentPos.boxLeft)  
+            }
+            else{
+                if(e!==jPopuptip.targetEle){
+                    boxCurrentPos = getBoxCurrentPosition(e,jPopuptip);
+                    setContent(jPopuptip,content);
+                    setBoxPosition(jPopuptip,boxCurrentPos.boxTop,boxCurrentPos.boxLeft);
+                }
+                else{
+                    common.addClass(jPopuptip,'hide');
+                }               
+            }
+        }
+    }
+    function setContent(box,content){
+        var div = box.getElementsByTagName('div');
+        for(var i = 0,len=div.length;i < len;i++){
+
+            if(common.hasClass(div[i],'container')){
+                div[i].innerHTML = content;
+                return;
+            }
+        };
     }
 
-    function showTips(e){
+    function setBoxPosition(box,top,left){
+        box.style.cssText = "position:absolute;top:"+top+"px;left:"+left+"px;";       
+    }
+    function clickShow(e){
         var e = e||window.event,
             e = e.target||e.srcElement;
-        var eleInfo = {
-            'tL' : getEleLeft(e),                            //目标元素与文档左边距离
-            'tT' : getEleTop(e),                             //目标元素与文档上边距离
-            'eleSize' : computeEleSize(e)                    //目标元素尺寸
-        },
-            targetPosition = getElePosInView(self,eleInfo),     //目标元素在视口中的相对位置
-            box = makeTipBox();
-
-            document.body.appendChild(box);
-
-        var opt = common.options;
-            boxSize =  computeEleSize(box), //提示框尺寸
-            boxNeedSize = {
-                'needWidth' : boxSize.width - (eleInfo.eleSize.width - parseInt(opt.boxOffsetX)),
-                'needHeight' : boxSize.height + parseInt(opt.boxOffsetY)+opt.arrowSize
-            },                                                  
-                                                                //提示框需要占用的位置尺寸
-            boxPosition = testBoxPosition(box,targetPosition,boxNeedSize),  //获取提示框位置
-            boxLLeft = eleInfo.tL + opt.boxOffsetX,
-            boxRLeft = eleInfo.tL - boxNeedSize.needWidth,
-            boxTTop = eleInfo.tT - opt.boxOffsetY - boxSize.height-opt.arrowSize,
-            boxBTop = eleInfo.tT + opt.boxOffsetY + eleInfo.eleSize.height+opt.arrowSize,
-            boxLeft = 0,
-            boxTop = 0;
-        switch(parseInt(boxPosition)){
-            case 0:                           //右上
-                boxLeft = boxLLeft;
-                boxTop = boxTTop;
-                box.className += ' m-tipboxT m-tipboxR';
-                break;
-            case 1:                           //左上
-                boxLeft = boxRLeft;
-                boxTop = boxTTop;
-                box.className += ' m-tipboxT m-tipboxL';
-                break;
-            case 2:                           //右下
-                boxLeft = boxLLeft;
-                boxTop = boxBTop;
-                box.className += ' m-tipboxB m-tipboxR';
-                break;
-            case 3:                           //左下
-                boxLeft = boxRLeft;
-                boxTop = boxBTop;
-                box.className += ' m-tipboxB m-tipboxL';
-                break;
-
-        }
-        box.style.cssText = "position:absolute;top:"+boxTop+"px;left:"+boxLeft+"px;";       
-        e.tipBox = box;
+            setBox(e);
+    }
+    function hoverShow(e){
+        var e = e||window.event,
+            e = e.target||e.srcElement;
+            setBox(e);
+    }
+    function hoverHide(){
+        common.addClass(document.getElementById('jPopuptip'),'hide');
     }
     function makeTipBox(){
         var tipBox = [];
-        for(var i = 0;i < 3;i++){
+        for(var i = 0;i < 4;i++){
             tipBox[i] = makeNewEle('div');
         }
+        tipBox[0].id = 'jPopuptip';
         tipBox[0].className = 'm-tipbox';
-        tipBox[1].className = 'u-arrow u-arrowB';
-        tipBox[2].className = 'u-arrow u-arrowT';
+        tipBox[1].className = 'container';
+        tipBox[2].className = 'u-arrow u-arrowB';
+        tipBox[3].className = 'u-arrow u-arrowT';
         tipBox[0].appendChild(tipBox[1]);
         tipBox[0].appendChild(tipBox[2]);
+        tipBox[0].appendChild(tipBox[3]);
         return tipBox[0];
     }
     //获取元素尺寸
@@ -171,11 +311,11 @@
             eleTop = eleInfo.tT- scroll.scrollTop,
             eleLeft = eleInfo.tL - scroll.scrollLeft,         
             viewSize = getViewport();
-        return {
-            'top' : eleTop,
-            'left' : eleLeft,
-            'right' : viewSize.viewWidth - eleInfo.eleSize.width - eleLeft,
-            'bottom': viewSize.viewHeight - eleInfo.eleSize.height - eleTop
+            return {
+                'top' : eleTop,
+                'left' : eleLeft,
+                'right' : viewSize.viewWidth - eleInfo.eleSize.width - eleLeft,
+                'bottom': viewSize.viewHeight - eleInfo.eleSize.height - eleTop
         };
     }
     //获取浏览器视口大小
@@ -187,10 +327,18 @@
         };
     //获取文档滚动高度与宽度
     function getDocScroll(){
-        return {
+        if(document.compatMode == 'BackCompat'){
+            return {
+            'scrollTop' : document.body.scrollTop,
+            'scrollLeft' : document.body.scrollLeft
+            };
+        }
+        else{
+            return {
             'scrollTop' : document.body.scrollTop+document.documentElement.scrollTop,
             'scrollLeft' : document.body.scrollLeft+document.documentElement.scrollLeft
-        };
+            };           
+        }
     }
     //获取元素与文档左边距离
     function getEleLeft(el){
@@ -212,6 +360,5 @@
         }
         return actulaTop;
     }
-
-    window.Tipbox = Tipbox;
+    window.jPopuptip = jPopuptip;
 })();

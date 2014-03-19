@@ -11,15 +11,12 @@
         body{
             height: 3000px;
         }
-        .m-tipbox{
-            width: 300px;
-            height: 100px;
+        #jPopuptip{
             padding: 10px;
             background: #fff;
             border: 1px solid #999;
-            position: relative;
         }
-        .m-tipbox .u-arrow{
+        .u-arrow{
             display: block;
             position: absolute;
             width: 0;
@@ -44,23 +41,18 @@
             top: -27px;
             border-color: transparent transparent #fff transparent;
         }
-        #my{
-            display: block;
-            width: 100px;
-            height: 100px;
-            line-height: 100px;
-            border: 1px solid #999;
-            margin: 300px 0 0 1100px;
+        .hide{
+            display: none;
         }
     </style>
 </head>
 <body>
-    <a id="my" data-showTip="show">my</a>
+    <a class="my" data-popuptip="show" data-triggle="click" data-content="hello!">my</a>
+    <a class="my" data-popuptip="show" data-triggle="hover" data-content="myfirstjs">my</a>
 <script type="text/javascript" src="jPopuptip.js"></script>
 <script type="text/javascript">
     (function(){
-        var f = Tipbox();
-        getElementById('my').Tipbox();
+        var f = jPopuptip();
     })();
 </script>
 </body>
