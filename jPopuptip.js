@@ -7,7 +7,7 @@
  */
 (function(){
     var defaults = {
-        'width' : 'auto',
+        'width' : 100,
         'height' : 'auto',
         'arrowOffset' : 20,
         'boxOffsetX' : 20,
@@ -216,8 +216,8 @@
             }
             else{
                 if(e!==jPopuptip.targetEle){
-                    boxCurrentPos = getBoxCurrentPosition(e,jPopuptip);
                     setContent(jPopuptip,content);
+                    boxCurrentPos = getBoxCurrentPosition(e,jPopuptip);                    
                     setBoxPosition(jPopuptip,boxCurrentPos.boxTop,boxCurrentPos.boxLeft);
                 }
                 else{
