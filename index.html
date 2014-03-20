@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset='utf-8' />
+    <meta http-equiv="X-UA-Compatible" content="chrome=1" />
+    <meta name="description" content="jPopuptip : 自适应位置的弹出提示框" />
+
+    <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/stylesheet.css">
+
+    <title>jPopuptip</title>
+  </head>
+
+  <body>
+
+    <!-- HEADER -->
+    <div id="header_wrap" class="outer">
+        <header class="inner">
+          <a id="forkme_banner" href="https://github.com/zhiyul/jPopuptip">View on GitHub</a>
+
+          <h1 id="project_title">jPopuptip</h1>
+          <h2 id="project_tagline">自适应位置的弹出提示框</h2>
+
+            <section id="downloads">
+              <a class="zip_download_link" href="https://github.com/zhiyul/jPopuptip/zipball/master">Download this project as a .zip file</a>
+              <a class="tar_download_link" href="https://github.com/zhiyul/jPopuptip/tarball/master">Download this project as a tar.gz file</a>
+            </section>
+        </header>
+    </div>
+
+    <!-- MAIN CONTENT -->
+    <div id="main_content_wrap" class="outer">
+      <section id="main_content" class="inner">
+        <h1>
+<a name="jpopuptip" class="anchor" href="#jpopuptip"><span class="octicon octicon-link"></span></a>jPopuptip</h1>
+
+<p>自适应位置的弹出提示框</p>
+
+<p>需要引入jPopuptip.js和jPopuptip.css文件</p>
+
+<h2>
+<a name="init" class="anchor" href="#init"><span class="octicon octicon-link"></span></a>init</h2>
+
+<pre><code>需要引入jPopuptip.js和jPopuptip.css文件
+
+&lt;link rel="stylesheet" type="text/css" href="jPopuptip.css"&gt;
+&lt;script type="text/javascript" src="jPopuptip.js"&gt;&lt;/script&gt;
+
+&lt;a class="btn" data-popuptip="show" data-content="这是个按钮!"&gt;more&lt;/a&gt;
+&lt;a class="btn" data-popuptip="show" data-triggle="click" data-content="你看到我了！"&gt;点击就能看到我&lt;/a&gt;&lt;/li&gt;
+
+为需要弹出框的元素添加 data-popuptip="show"
+通过设置 data-triggle="click" 可为元素添加触独立触发方式
+通过设置 data-content="hello",为弹出框添加内容
+
+var p = new jPopuptip({
+    width : 'auto',     //弹出框宽度，默认为auto
+    height : 'auto',    //弹出框高度，默认为auto
+    'boxOffsetX' : 20,  //弹出框偏移目标呢元素左/右边界距离，默认为20px
+    'boxOffsetY' : 5,   //弹出框偏移目标呢元素上/下边界距离，默认为20px
+    'arrowSize' : 10,   //弹出框偏箭头大小，默认10px
+    'triggle' : 'hover' //触发弹出框事件，默认为hover，可设置为click
+});
+</code></pre>
+      </section>
+    </div>
+
+    <!-- FOOTER  -->
+    <div id="footer_wrap" class="outer">
+      <footer class="inner">
+        <p class="copyright">jPopuptip maintained by <a href="https://github.com/zhiyul">zhiyul</a></p>
+        <p>Published with <a href="http://pages.github.com">GitHub Pages</a></p>
+      </footer>
+    </div>
+
+    
+
+  </body>
+</html>
