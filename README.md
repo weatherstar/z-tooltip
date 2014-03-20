@@ -3,7 +3,9 @@ jPopuptip
 
 自适应位置的弹出提示框
 
-需要引入jPopuptip.js和jPopuptip.css文件
+提示框默认出现顺序优先级：右上 -> 左上 -> 右下 -> 左下
+
+一个例子：http://zhiyul.github.io/jPopuptip/
 
 ##init
 	需要引入jPopuptip.js和jPopuptip.css文件
@@ -12,7 +14,9 @@ jPopuptip
 	<script type="text/javascript" src="jPopuptip.js"></script>
 
 	<a class="btn" data-popuptip="show" data-content="这是个按钮!">more</a>
-    <a class="btn" data-popuptip="show" data-triggle="click" data-content="你看到我了！">点击就能看到我</a></li>
+    <a class="btn" data-popuptip="show" data-triggle="click" data-content="你看到我了！">
+		点击就能看到我
+	</a>
 
 	为需要弹出框的元素添加 data-popuptip="show"
 	通过设置 data-triggle="click" 可为元素添加触独立触发方式
