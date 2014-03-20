@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>提示弹出框</title>
+    <link rel="stylesheet" type="text/css" href="jPopuptip.css">
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+        }
+        body{width: 2000px; height: 2000px;font: 14px/1.2 "Microsoft YaHei";}
+        p{padding: 30px;}
+        ul li{
+            display: inline-block;
+            *display: inline;
+            *zoom:1;
+            margin-right: 40px;
+            overflow:hidden;
+            vertical-align: top;
+        }
+        .mt200{margin-top:200px;}
+        .btn{
+            display: block;
+            width: 120px;
+            height: 30px;
+            line-height: 30px;
+            background: #fafafa;
+            color: #333;
+            text-align: center;
+            border:1px solid #ddd;
+        }
+    </style>
+</head>
+<body>
+    <p>你可以滑动滚动条，查看弹出框的变化。</p>
+    <ul>
+        <li class="mt200"><a class="btn" data-popuptip="show" data-content="这是个按钮!">more</a></li>
+        <li><a class="btn" data-popuptip="show" data-triggle="click" data-content="你看到我了！">点击就能看到我</a></li>
+        <li class="mt200"><a class="btn" data-popuptip="show" data-content="这也是个按钮!">more</a></li>
+        <li><a class="btn" data-popuptip="show" data-content="hello!">more</a></li>
+        <li class="mt200"><a class="btn" data-popuptip="show" data-content="这还是个按钮!">more</a></li>
+        <li><a class="btn" data-popuptip="show" data-content="hellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohello!">more</a></li>
+        <li class="mt200"><a class="btn" data-popuptip="show" data-content="这还是个按钮!">more</a></li>
+        <li><a class="btn" data-popuptip="show" data-content="这还是个按钮!">more</a></li>
+    </ul>
+<script type="text/javascript" src="jPopuptip.js"></script>
+<script type="text/javascript">
+    (function(){
+        var p = jPopuptip({
+            width:200,
+            height:100,
+            boxOffsetX:70,
+            boxOffsetY:7
+        });
+    })();
+</script>
+</body>
+</html>

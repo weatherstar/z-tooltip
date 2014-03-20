@@ -7,12 +7,11 @@
  */
 (function(){
     var defaults = {
-        'width' : 100,
+        'width' : 'auto',
         'height' : 'auto',
-        'arrowOffset' : 20,
         'boxOffsetX' : 20,
         'boxOffsetY' : 5,
-        'arrowSize' : 14,
+        'arrowSize' : 10,
         'triggle' : 'hover'
     };
     var common = {
@@ -118,6 +117,7 @@
          this.init();
     };
     jPopuptip.fn = jPopuptip.prototype;
+
     jPopuptip.fn.init = function(){
         var allTarget = common.getEleByAttr('data-popuptip','show');
         for(var i = 0,len = allTarget.length;i < len;i++){
@@ -133,22 +133,113 @@
             else{
                 bindHover(allTarget[i]);
             }
-            
         }
     }
+
     function bindHover(ele){
         common.bind(ele,'mouseover',hoverShow,'hoverShow');
         common.bind(ele,'mouseout',hoverHide,'hoverHide');
     }
+
+    function clickShow(e){
+        var e = e||window.event,
+            e = e.target||e.srcElement;
+            setBox(e);
+    }
+
+    function hoverShow(e){
+        var e = e||window.event,
+            e = e.target||e.srcElement;
+            setBox(e);
+    }
+
+    function hoverHide(){
+        document.getElementById('jPopuptip').style.display = 'none';
+    }
+    //设置弹出框的位置
+    function setBox(e){
+        var jPopuptip = document.getElementById('jPopuptip'),
+            content = e.getAttribute('data-content'),
+            boxCurrentPos;
+            if(!content){
+                content='';
+            }     
+        if(!jPopuptip){
+            var box = makeTipBox();
+            document.body.appendChild(box);
+            setContent(box,content);
+            boxCurrentPos = getBoxCurrentPosition(e,box);
+            setBoxPosition(box,boxCurrentPos.boxTop,boxCurrentPos.boxLeft);
+        }
+        else{
+            if(jPopuptip.style.display == 'none'){
+                if(e!==jPopuptip.targetEle){
+                    setContent(jPopuptip,content);
+                }
+                jPopuptip.style.display = 'block';           
+                boxCurrentPos = getBoxCurrentPosition(e,jPopuptip);
+                setBoxPosition(jPopuptip,boxCurrentPos.boxTop,boxCurrentPos.boxLeft)  
+            }
+            else{
+                if(e!==jPopuptip.targetEle){
+                    setContent(jPopuptip,content);
+                    boxCurrentPos = getBoxCurrentPosition(e,jPopuptip);                    
+                    setBoxPosition(jPopuptip,boxCurrentPos.boxTop,boxCurrentPos.boxLeft);
+                }
+                else{
+                    jPopuptip.style.display = 'none';
+                }               
+            }
+        }
+    }
+
+    function makeTipBox(){
+            var tipBox = [];
+            for(var i = 0;i < 4;i++){
+                tipBox[i] = makeNewEle('div');
+            }
+            tipBox[0].id = 'jPopuptip';
+            tipBox[0].style.display = "block";
+            tipBox[0].className = 'm-tipbox';
+            tipBox[1].className = 'container';
+            tipBox[2].className = 'u-arrow u-arrowB';
+            tipBox[3].className = 'u-arrow u-arrowT';
+            tipBox[0].appendChild(tipBox[1]);
+            tipBox[0].appendChild(tipBox[2]);
+            tipBox[0].appendChild(tipBox[3]);
+            return tipBox[0];
+        }
+
+    function setContent(box,content){
+        var div = box.getElementsByTagName('div');
+        for(var i = 0,len=div.length;i < len;i++){
+
+            if(common.hasClass(div[i],'container')){
+                div[i].innerHTML = content;
+                return;
+            }
+        };
+    }
+
+    function setBoxPosition(box,top,left){
+        box.style.position="absolute";
+        box.style.top=top+'px';
+        box.style.left=left+'px';      
+    }
+
     function getBoxCurrentPosition(e,box){
         var eleInfo = {
                 'tL' : getEleLeft(e),                            //目标元素与文档左边距离
                 'tT' : getEleTop(e),                             //目标元素与文档上边距离
                 'eleSize' : computeEleSize(e)                    //目标元素尺寸
             },
-            targetPosition = getElePosInView(self,eleInfo);   //目标元素在视口中的相对位置          
+            targetPosition = getElePosInView(self,eleInfo);      //目标元素在视口中的相对位置          
+
             var opt = common.options;
-                boxSize =  computeEleSize(box), //提示框尺寸
+            if(opt.width != 'auto'){box.style.width = opt.width+'px';}
+            if(opt.height != 'auto'){box.style.height = opt.height+'px';}
+
+            var boxSize = computeEleSize(box),
                 boxNeedSize = {
                     'needWidth' : boxSize.width - (eleInfo.eleSize.width - parseInt(opt.boxOffsetX)),
                     'needHeight' : boxSize.height + parseInt(opt.boxOffsetY)+opt.arrowSize
@@ -190,95 +281,18 @@
             };
             return boxCurrentPos;
     }
-    function setBox(e){
-        var jPopuptip = document.getElementById('jPopuptip'),
-            content = e.getAttribute('data-content'),
-            boxCurrentPos;
-            if(!content){
-                content='';
-            }     
-        if(!jPopuptip){
-            var box = makeTipBox();
-            document.body.appendChild(box);
-            setContent(box,content);
-            boxCurrentPos = getBoxCurrentPosition(e,box);
-            setBoxPosition(box,boxCurrentPos.boxTop,boxCurrentPos.boxLeft);
-        }
-        else{
-            if(common.hasClass(jPopuptip,'hide')){
-                if(e!==jPopuptip.targetEle){
-                    setContent(jPopuptip,content);
-                }
-                common.removeClass(jPopuptip,'hide');
-                jPopuptip.style.display = 'block';           
-                boxCurrentPos = getBoxCurrentPosition(e,jPopuptip);
-                setBoxPosition(jPopuptip,boxCurrentPos.boxTop,boxCurrentPos.boxLeft)  
-            }
-            else{
-                if(e!==jPopuptip.targetEle){
-                    setContent(jPopuptip,content);
-                    boxCurrentPos = getBoxCurrentPosition(e,jPopuptip);                    
-                    setBoxPosition(jPopuptip,boxCurrentPos.boxTop,boxCurrentPos.boxLeft);
-                }
-                else{
-                    common.addClass(jPopuptip,'hide');
-                }               
-            }
-        }
-    }
-    function setContent(box,content){
-        var div = box.getElementsByTagName('div');
-        for(var i = 0,len=div.length;i < len;i++){
-
-            if(common.hasClass(div[i],'container')){
-                div[i].innerHTML = content;
-                return;
-            }
-        };
-    }
-
-    function setBoxPosition(box,top,left){
-        box.style.cssText = "position:absolute;top:"+top+"px;left:"+left+"px;";       
-    }
-    function clickShow(e){
-        var e = e||window.event,
-            e = e.target||e.srcElement;
-            setBox(e);
-    }
-    function hoverShow(e){
-        var e = e||window.event,
-            e = e.target||e.srcElement;
-            setBox(e);
-    }
-    function hoverHide(){
-        common.addClass(document.getElementById('jPopuptip'),'hide');
-    }
-    function makeTipBox(){
-        var tipBox = [];
-        for(var i = 0;i < 4;i++){
-            tipBox[i] = makeNewEle('div');
-        }
-        tipBox[0].id = 'jPopuptip';
-        tipBox[0].className = 'm-tipbox';
-        tipBox[1].className = 'container';
-        tipBox[2].className = 'u-arrow u-arrowB';
-        tipBox[3].className = 'u-arrow u-arrowT';
-        tipBox[0].appendChild(tipBox[1]);
-        tipBox[0].appendChild(tipBox[2]);
-        tipBox[0].appendChild(tipBox[3]);
-        return tipBox[0];
-    }
-    //获取元素尺寸
+    
     function makeNewEle(ele){
         return document.createElement(ele);
     }
+
     function computeEleSize(el){
         return {
             'width' : el.offsetWidth,
             'height' : el.offsetHeight
         };
     }
-    //判断提示框应出现的位置
+    //检测四个位置哪里最合适放置弹出框
     function testBoxPosition(el,tp,bns){
         var arr = [
                 {
