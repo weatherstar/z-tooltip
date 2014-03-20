@@ -1,10 +1,3 @@
-/**
- * Created with JetBrains PhpStorm.
- * Author: zhiyul
- * Date: 14-3-13
- * Time: 上午10:46
- * To change this template use File | Settings | File Templates.
- */
 (function(){
     var defaults = {
         'width' : 'auto',
