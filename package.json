@@ -1,0 +1,32 @@
+{
+  "name": "ztooltip",
+  "version": "1.0.0",
+  "description": "A simple tooltip made by pure javascript,working on most browsers includes IE6.",
+  "main": "dist/ZTooltip.min.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/zhiyul/ZTooltip.git"
+  },
+  "keywords": [
+    "tooltip",
+    "javascript",
+    "IE6"
+  ],
+  "author": "zhiyul",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/zhiyul/ZTooltip/issues"
+  },
+  "homepage": "https://github.com/zhiyul/ZTooltip#readme",
+  "devDependencies": {
+    "gulp": "^3.9.1",
+    "gulp-clean": "^0.3.2",
+    "gulp-minify-css": "^1.2.4",
+    "gulp-rename": "^1.2.2",
+    "gulp-sequence": "^0.4.5",
+    "gulp-uglify": "^1.5.3"
+  }
+}
