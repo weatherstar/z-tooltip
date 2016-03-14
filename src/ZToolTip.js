@@ -326,12 +326,11 @@
         };
     }
     //获取浏览器视口大小
-    function getViewport()
-        {
-            var w = (window.innerWidth) ? window.innerWidth : (document.documentElement && document.documentElement.clientWidth) ? document.documentElement.clientWidth : document.body.offsetWidth;
-            var h = (window.innerHeight) ? window.innerHeight : (document.documentElement && document.documentElement.clientHeight) ? document.documentElement.clientHeight : document.body.offsetHeight;
-            return {'viewWidth':w,'viewHeight':h};
-        };
+    function getViewport() {
+        var w = (window.innerWidth) ? window.innerWidth : (document.documentElement && document.documentElement.clientWidth) ? document.documentElement.clientWidth : document.body.offsetWidth;
+        var h = (window.innerHeight) ? window.innerHeight : (document.documentElement && document.documentElement.clientHeight) ? document.documentElement.clientHeight : document.body.offsetHeight;
+        return {'viewWidth':w,'viewHeight':h};
+    }
     //获取文档滚动高度与宽度
     function getDocScroll(){
         if(document.compatMode == 'BackCompat'){
