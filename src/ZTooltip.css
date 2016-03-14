@@ -1,8 +1,0 @@
-#ZTooltip{padding: 10px;background: #fff;border: 1px solid #999;position:absolute;word-wrap:break-word;}
-.u-arrow{display: block;position: absolute;width: 0;height: 0;border: 10px solid;}
-.m-tipboxL .u-arrow{right: 20px;}
-.m-tipboxR .u-arrow{left: 20px;}
-.m-tipboxT .u-arrowB{bottom: -20px;border-color: #999 transparent transparent transparent;}
-.m-tipboxT .u-arrowT{bottom: -19px;border-color: #fff transparent transparent transparent;}
-.m-tipboxB .u-arrowB{top: -20px;border-color: transparent transparent #999 transparent;}
-.m-tipboxB .u-arrowT{top: -19px;border-color: transparent transparent #fff transparent;}

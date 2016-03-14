@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <title>提示弹出框</title>
-    <link rel="stylesheet" type="text/css" href="jPopuptip.css">
+    <link rel="stylesheet" type="text/css" href="./ZTooltip.min.css">
     <style>
         *{
             margin: 0;
@@ -35,23 +35,24 @@
 <body>
     <p>你可以滑动滚动条，查看弹出框的变化。</p>
     <ul>
-        <li class="mt200"><a class="btn" data-popuptip="show" data-content="这是个按钮!">more</a></li>
-        <li><a class="btn" data-popuptip="show" data-triggle="click" data-content="你看到我了！">点击就能看到我</a></li>
-        <li class="mt200"><a class="btn" data-popuptip="show" data-content="这也是个按钮!">more</a></li>
-        <li><a class="btn" data-popuptip="show" data-content="hello!">more</a></li>
-        <li class="mt200"><a class="btn" data-popuptip="show" data-content="这还是个按钮!">more</a></li>
-        <li><a class="btn" data-popuptip="show" data-content="hellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohello!">more</a></li>
-        <li class="mt200"><a class="btn" data-popuptip="show" data-content="这还是个按钮!">more</a></li>
-        <li><a class="btn" data-popuptip="show" data-content="这还是个按钮!">more</a></li>
+        <li class="mt200"><a class="btn" data-tooltip="show" data-content="这是个按钮!">more</a></li>
+        <li><a class="btn" data-tooltip="show" data-trigger="click" data-content="你看到我了！">点击就能看到我</a></li>
+        <li class="mt200"><a class="btn" data-tooltip="show" data-content="这也是个按钮!">more</a></li>
+        <li><a class="btn" data-tooltip="show" data-content="hello!">more</a></li>
+        <li class="mt200"><a class="btn" data-tooltip="show" data-content="这还是个按钮!">more</a></li>
+        <li><a class="btn" data-tooltip="show" data-content="hellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohello!">more</a></li>
+        <li class="mt200"><a class="btn" data-tooltip="show" data-content="这还是个按钮!">more</a></li>
+        <li><a class="btn" data-tooltip="show" data-content="这还是个按钮!">more</a></li>
     </ul>
-<script type="text/javascript" src="jPopuptip.min.js"></script>
+<script type="text/javascript" src="./ZToolTip.min.js"></script>
 <script type="text/javascript">
     (function(){
-        var p = jPopuptip({
+        ZTooltip({
             width:200,
             height:100,
             boxOffsetX:70,
-            boxOffsetY:7
+            boxOffsetY:7,
+            trigger: 'click'
         });
     })();
 </script>
