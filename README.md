@@ -1,11 +1,11 @@
-jPopuptip
+ZTooltip
 =========
 
 自适应位置的弹出提示框
 
 提示框默认出现顺序优先级：右上 -> 左上 -> 右下 -> 左下
 
-一个例子：http://zhiyul.github.io/jPopuptip/
+一个例子：http://zhiyul.github.io/ZToolTip/
 
 ##init
 	需要引入jPopuptip.js和jPopuptip.css文件

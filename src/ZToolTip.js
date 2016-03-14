@@ -5,7 +5,7 @@
         'boxOffsetX' : 20,
         'boxOffsetY' : 5,
         'arrowSize' : 10,
-        'triggle' : 'hover'
+        'trigger' : 'hover'
     };
     var common = {
         options:{},
@@ -102,24 +102,24 @@
         }
     };
 
-    var jPopuptip = function(opt){
-        if(!(this instanceof jPopuptip)){
-            return new jPopuptip(opt);
+    var ZTooltip = function(opt){
+        if(!(this instanceof ZTooltip)){
+            return new ZTooltip(opt);
         }
          common.options = common.extend(defaults,opt);
          this.init();
     };
-    jPopuptip.fn = jPopuptip.prototype;
+    ZTooltip.fn = ZTooltip.prototype;
 
-    jPopuptip.fn.init = function(){
+    ZTooltip.fn.init = function(){
         var allTarget = common.getEleByAttr('data-popuptip','show');
         for(var i = 0,len = allTarget.length;i < len;i++){
-            var triggle = allTarget[i].getAttribute('data-triggle');
-            if(triggle){
-                if(triggle =='click'){
+            var trigger = allTarget[i].getAttribute('data-trigger');
+            if(trigger){
+                if(trigger =='click'){
                     common.bind(allTarget[i],'click',clickShow,'clickshow');
                 }
-                else if(triggle =='hover'){
+                else if(trigger =='hover'){
                     bindHover(allTarget[i]);
                 }
             }
@@ -147,17 +147,17 @@
     }
 
     function hoverHide(){
-        document.getElementById('jPopuptip').style.display = 'none';
+        document.getElementById('ZTooltip').style.display = 'none';
     }
     //设置弹出框的位置
     function setBox(e){
-        var jPopuptip = document.getElementById('jPopuptip'),
+        var ZTooltip = document.getElementById('ZTooltip'),
             content = e.getAttribute('data-content'),
             boxCurrentPos;
             if(!content){
                 content='';
             }     
-        if(!jPopuptip){
+        if(!ZTooltip){
             var box = makeTipBox();
             document.body.appendChild(box);
             setContent(box,content);
@@ -165,22 +165,22 @@
             setBoxPosition(box,boxCurrentPos.boxTop,boxCurrentPos.boxLeft);
         }
         else{
-            if(jPopuptip.style.display == 'none'){
-                if(e!==jPopuptip.targetEle){
-                    setContent(jPopuptip,content);
+            if(ZTooltip.style.display == 'none'){
+                if(e!==ZTooltip.targetEle){
+                    setContent(ZTooltip,content);
                 }
-                jPopuptip.style.display = 'block';           
-                boxCurrentPos = getBoxCurrentPosition(e,jPopuptip);
-                setBoxPosition(jPopuptip,boxCurrentPos.boxTop,boxCurrentPos.boxLeft)  
+                ZTooltip.style.display = 'block';           
+                boxCurrentPos = getBoxCurrentPosition(e,ZTooltip);
+                setBoxPosition(ZTooltip,boxCurrentPos.boxTop,boxCurrentPos.boxLeft)  
             }
             else{
-                if(e!==jPopuptip.targetEle){
-                    setContent(jPopuptip,content);
-                    boxCurrentPos = getBoxCurrentPosition(e,jPopuptip);                    
-                    setBoxPosition(jPopuptip,boxCurrentPos.boxTop,boxCurrentPos.boxLeft);
+                if(e!==ZTooltip.targetEle){
+                    setContent(ZTooltip,content);
+                    boxCurrentPos = getBoxCurrentPosition(e,ZTooltip);                    
+                    setBoxPosition(ZTooltip,boxCurrentPos.boxTop,boxCurrentPos.boxLeft);
                 }
                 else{
-                    jPopuptip.style.display = 'none';
+                    ZTooltip.style.display = 'none';
                 }               
             }
         }
@@ -191,7 +191,7 @@
             for(var i = 0;i < 4;i++){
                 tipBox[i] = makeNewEle('div');
             }
-            tipBox[0].id = 'jPopuptip';
+            tipBox[0].id = 'ZTooltip';
             tipBox[0].style.display = "block";
             tipBox[0].className = 'm-tipbox';
             tipBox[1].className = 'container';
@@ -367,5 +367,5 @@
         }
         return actulaTop;
     }
-    window.jPopuptip = jPopuptip;
+    window.ZTooltip = ZTooltip;
 })();

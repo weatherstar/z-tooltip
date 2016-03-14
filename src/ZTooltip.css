@@ -1,4 +1,4 @@
-#jPopuptip{padding: 10px;background: #fff;border: 1px solid #999;position:absolute;word-wrap:break-word;}
+#ZTooltip{padding: 10px;background: #fff;border: 1px solid #999;position:absolute;word-wrap:break-word;}
 .u-arrow{display: block;position: absolute;width: 0;height: 0;border: 10px solid;}
 .m-tipboxL .u-arrow{right: 20px;}
 .m-tipboxR .u-arrow{left: 20px;}
