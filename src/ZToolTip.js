@@ -112,7 +112,7 @@
     ZTooltip.fn = ZTooltip.prototype;
 
     ZTooltip.fn.init = function(){
-        var allTarget = common.getEleByAttr('data-popuptip','show');
+        var allTarget = common.getEleByAttr('data-tooltip','show');
         for(var i = 0,len = allTarget.length;i < len;i++){
             var trigger = allTarget[i].getAttribute('data-trigger');
             if(trigger){
@@ -123,7 +123,9 @@
                     bindHover(allTarget[i]);
                 }
             }
-            else{
+            else if(common.options.trigger == 'click'){
+                common.bind(allTarget[i],'click',clickShow,'clickshow');
+            }else{
                 bindHover(allTarget[i]);
             }
         }
