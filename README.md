@@ -1,33 +1,55 @@
-ZTooltip
-=========
+#ZTooltip
 
-自适应位置的弹出提示框
+A simple tooltip made by pure javascript,working on most browsers includes IE6.
 
-提示框默认出现顺序优先级：右上 -> 左上 -> 右下 -> 左下
+无任何依赖，兼容绝大部分浏览器包括IE6，很适合简单的活动页使用。tooltip显示时会自动调整出现位置以保证自身始终处于浏览器视口范围内。
 
-一个例子：http://zhiyul.github.io/ZToolTip/
+##Introduction
 
-##init
-	需要引入jPopuptip.js和jPopuptip.css文件
+[Demo](http://weatherstar.me/ZTooltip/)
 
-	<link rel="stylesheet" type="text/css" href="jPopuptip.css">
-	<script type="text/javascript" src="jPopuptip.js"></script>
+Screenshot
 
-	<a class="btn" data-popuptip="show" data-content="这是个按钮!">more</a>
-    <a class="btn" data-popuptip="show" data-triggle="click" data-content="你看到我了！">
-		点击就能看到我
-	</a>
+##Install
 
-	为需要弹出框的元素添加 data-popuptip="show"
-	通过设置 data-triggle="click" 可为元素添加触独立触发方式
-	通过设置 data-content="hello",为弹出框添加内容
+```
+$ npm install ztooltip
+```
 
-    var p = new jPopuptip({
-		width : 'auto',		//弹出框宽度，默认为auto
-		height : 'auto',	//弹出框高度，默认为auto
-        'boxOffsetX' : 20,	//弹出框偏移目标呢元素左/右边界距离，默认为20px
-        'boxOffsetY' : 5,	//弹出框偏移目标呢元素上/下边界距离，默认为20px
-        'arrowSize' : 10,	//弹出框偏箭头大小，默认10px
-        'triggle' : 'hover'	//触发弹出框事件，默认为hover，可设置为click
-	});
+##Usage
 
+###HTML
+
+```HTML 
+<link rel="stylesheet" href="ZTooltip.min.css">
+<!-- ... -->
+<a data-popuptip="show" data-content="This is a button!">Hover to see me</a>
+<a data-popuptip="show" data-triggle="click" data-content="You catch me！">
+    Click to see me
+</a>
+<!-- ... -->
+<script src="ZTooltip.min.js"></script>
+```
+
+###JS
+
+```JS
+ZTooltip({
+	width: 200,			// Optional tooltip width, default 200px
+	height: 100,		// Optional tooltip height, default auto
+	boxOffsetX: 70,		// Optional tooltip offsetX, default 20px
+	boxOffsetY: 7,		// Optional tooltip offsetY, default 5px
+	arrowSize: 10		// Optional size of tooltip's arrow, default 10px
+	trigger: 'click'	// Optional trigger method, default hover
+});
+```
+
+### Attribute
+
+You need add `data-tooltip="show"` to the element which you want to trigger tooltip.The Attribute `data-content=xxx` provides words in the tooltip.You can also set `data-trigger="click/hover"` to add another way to trigger tooltip of the element.
+
+你需要给触发tooltip的元素添加 `data-tooltip="show"` 属性, `data-content="xxx"` 里添加tooltip里显示的文字。可以通过 `data-trigger="click/hover"` 为元素添加另外的触发方式。
+
+## LICENSE
+
+MIT © [zhiyul](http://github.com/zhiyul)

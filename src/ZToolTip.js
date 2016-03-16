@@ -1,6 +1,6 @@
 (function(){
     var defaults = {
-        'width' : 'auto',
+        'width' : 200,
         'height' : 'auto',
         'boxOffsetX' : 20,
         'boxOffsetY' : 5,
