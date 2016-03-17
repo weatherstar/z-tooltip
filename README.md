@@ -1,6 +1,6 @@
 #ZTooltip
 
-A simple tooltip made by pure javascript,working on most browsers includes IE6.
+A simple tooltip made by pure javascript,working on most browsers includes IE6.It's very befitting to be used in a simple single page.The tooltip will adjusts it's position to make sure that is in the viewport.
 
 无任何依赖，兼容绝大部分浏览器包括IE6，很适合简单的活动页使用。tooltip显示时会自动调整出现位置以保证自身始终处于浏览器视口范围内。
 
@@ -31,8 +31,8 @@ $ npm install ztooltip
 ```HTML
 <link rel="stylesheet" href="ZTooltip.min.css">
 <!-- ... -->
-<a data-popuptip="show" data-content="This is a button!">Hover</a>
-<a data-popuptip="show" data-triggle="click" data-content="You catch me！">Click</a>
+<a data-tooltip="show" data-content="This is a button!">Hover</a>
+<a data-tooltip="show" data-trigger="click" data-content="You catch me！">Click</a>
 <!-- ... -->
 <script src="ZTooltip.min.js"></script>
 ```
@@ -41,12 +41,12 @@ $ npm install ztooltip
 
 ```JS
 ZTooltip({
-	width: 200,			// Optional tooltip width, default 200px
-	height: 100,		// Optional tooltip height, default auto
-	boxOffsetX: 70,		// Optional tooltip offsetX, default 20px
-	boxOffsetY: 7,		// Optional tooltip offsetY, default 5px
-	arrowSize: 10		// Optional size of tooltip's arrow, default 10px
-	trigger: 'click'	// Optional trigger method, default hover
+	width: 200,        // Optional tooltip width, default 200px
+	height: 100,       // Optional tooltip height, default auto
+	boxOffsetX: 70,    // Optional tooltip offsetX, default 20px
+	boxOffsetY: 7,     // Optional tooltip offsetY, default 5px
+	arrowSize: 10,     // Optional size of tooltip's arrow, default 10px
+	trigger: 'click'   // Optional trigger method, default hover
 });
 ```
 
@@ -56,8 +56,6 @@ ZTooltip({
 var ZTooltip = require('ZTooltip');
 ZTooltip({...});
 ```
-
-
 
 ### Attribute
 

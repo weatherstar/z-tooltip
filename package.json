@@ -1,6 +1,6 @@
 {
   "name": "ztooltip",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "A simple tooltip made by pure javascript,working on most browsers includes IE6.",
   "main": "dist/ZTooltip.min.js",
   "scripts": {
