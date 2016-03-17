@@ -368,5 +368,9 @@
         }
         return actulaTop;
     }
-    window.ZTooltip = ZTooltip;
+    if(typeof module !== 'undefined' && typeof  module.exports !== 'undefined'){
+        module.exports = ZTooltip;
+    }else{
+        window.ZTooltip = ZTooltip;
+    }
 })();

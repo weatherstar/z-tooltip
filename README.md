@@ -10,6 +10,14 @@ A simple tooltip made by pure javascript,working on most browsers includes IE6.
 
 Screenshot
 
+![image](http://7xls2e.com1.z0.glb.clouddn.com/ztooltip-demo1.png)
+
+![image](http://7xls2e.com1.z0.glb.clouddn.com/ztooltip-demo2.png)
+
+![image](http://7xls2e.com1.z0.glb.clouddn.com/ztooltip-demo3.png)
+
+
+
 ##Install
 
 ```
@@ -20,13 +28,11 @@ $ npm install ztooltip
 
 ###HTML
 
-```HTML 
+```HTML
 <link rel="stylesheet" href="ZTooltip.min.css">
 <!-- ... -->
-<a data-popuptip="show" data-content="This is a button!">Hover to see me</a>
-<a data-popuptip="show" data-triggle="click" data-content="You catch me！">
-    Click to see me
-</a>
+<a data-popuptip="show" data-content="This is a button!">Hover</a>
+<a data-popuptip="show" data-triggle="click" data-content="You catch me！">Click</a>
 <!-- ... -->
 <script src="ZTooltip.min.js"></script>
 ```
@@ -43,6 +49,15 @@ ZTooltip({
 	trigger: 'click'	// Optional trigger method, default hover
 });
 ```
+
+#### Work with module bundler
+
+```js
+var ZTooltip = require('ZTooltip');
+ZTooltip({...});
+```
+
+
 
 ### Attribute
 
